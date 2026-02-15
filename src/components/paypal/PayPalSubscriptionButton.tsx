@@ -10,22 +10,6 @@ type Props = {
   onSubscribed?: (subscriptionId: string) => void;
 };
 
-declare global {
-  interface Window {
-    paypal?: {
-      Buttons: (options: {
-        style?: Record<string, string>;
-        createSubscription: (
-          data: unknown,
-          actions: { subscription: { create: (params: { plan_id: string }) => Promise<string> } }
-        ) => Promise<string>;
-        onApprove: (data: { subscriptionID: string }) => void;
-        onError?: (error: unknown) => void;
-      }) => { render: (container: HTMLElement) => void; close?: () => void };
-    };
-  }
-}
-
 export default function PayPalSubscriptionButton({ onSubscribed }: Props) {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,22 +18,22 @@ export default function PayPalSubscriptionButton({ onSubscribed }: Props) {
   const planId = process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID;
 
   useEffect(() => {
-    if (!ready || !containerRef.current || !window.paypal || !planId) {
+    if (!ready || !containerRef.current || !(window as any).paypal || !planId) {
       return;
     }
 
-    const buttons = window.paypal.Buttons({
+    const buttons = (window as any).paypal.Buttons({
       style: {
         layout: "vertical",
         shape: "pill",
         color: "gold",
         label: "subscribe",
       },
-      createSubscription: async (_data, actions) => {
+      createSubscription: async (_data: any, actions: any) => {
         setError(null);
         return actions.subscription.create({ plan_id: planId });
       },
-      onApprove: async (data) => {
+      onApprove: async (data: any) => {
         const subId = data.subscriptionID;
         // Save to backend
         try {

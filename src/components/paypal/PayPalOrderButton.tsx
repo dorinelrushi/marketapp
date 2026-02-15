@@ -7,19 +7,6 @@ type Props = {
   onApproved?: (orderId: string) => void;
 };
 
-declare global {
-  interface Window {
-    paypal?: {
-      Buttons: (options: {
-        style?: Record<string, string>;
-        createOrder: () => Promise<string>;
-        onApprove: (data: { orderID: string }) => Promise<void>;
-        onError?: (error: unknown) => void;
-      }) => { render: (container: HTMLElement) => void; close?: () => void };
-    };
-  }
-}
-
 export default function PayPalOrderButton({ onApproved }: Props) {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,11 +14,11 @@ export default function PayPalOrderButton({ onApproved }: Props) {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
   useEffect(() => {
-    if (!ready || !containerRef.current || !window.paypal) {
+    if (!ready || !containerRef.current || !(window as any).paypal) {
       return;
     }
 
-    const buttons = window.paypal.Buttons({
+    const buttons = (window as any).paypal.Buttons({
       style: {
         layout: "vertical",
         shape: "pill",
@@ -47,7 +34,7 @@ export default function PayPalOrderButton({ onApproved }: Props) {
         }
         return data.id;
       },
-      onApprove: async (data) => {
+      onApprove: async (data: any) => {
         const response = await fetch("/api/paypal/capture-refund", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -9,22 +9,23 @@ type Props = {
     onError?: (error: any) => void;
 };
 
+
 export default function PayPalOneTimeButton({ amount, onSuccess, onError }: Props) {
     const [ready, setReady] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
     useEffect(() => {
-        if (!ready || !containerRef.current || !window.paypal) return;
+        if (!ready || !containerRef.current || !(window as any).paypal) return;
 
-        const buttons = window.paypal.Buttons({
+        const buttons = (window as any).paypal.Buttons({
             style: {
                 layout: "vertical",
                 shape: "rect",
                 color: "gold",
                 label: "pay",
             },
-            createOrder: (_data, actions) => {
+            createOrder: (_data: any, actions: any) => {
                 return actions.order.create({
                     purchase_units: [
                         {
@@ -36,11 +37,11 @@ export default function PayPalOneTimeButton({ amount, onSuccess, onError }: Prop
                     ],
                 });
             },
-            onApprove: async (data, actions) => {
+            onApprove: async (data: any, actions: any) => {
                 const details = await actions.order.capture();
                 onSuccess(details);
             },
-            onError: (err) => {
+            onError: (err: any) => {
                 console.error("PayPal Error:", err);
                 if (onError) onError(err);
             },
