@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const updateProfileSchema = z.object({
-    username: z.string().min(2).optional(),
+    fullName: z.string().min(2).optional(),
     email: z.string().email().optional(),
     password: z.string().min(6).optional(),
 });
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
         }
 
         await connectToDatabase();
-        const user = await User.findById(userId).select("-password -__v");
+        const user = await User.findById(userId).select("-passwordHash -__v");
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -60,18 +60,18 @@ export async function PUT(request: Request) {
 
         if (!result.success) {
             return NextResponse.json(
-                { error: "Validation failed", details: result.error.errors },
+                { error: "Validation failed", details: result.error.format() },
                 { status: 400 }
             );
         }
 
-        const { username, email, password } = result.data;
+        const { fullName, email, password } = result.data as any;
         const updateData: any = {};
 
-        if (username) updateData.username = username;
+        if (fullName) updateData.fullName = fullName;
         if (email) updateData.email = email;
         if (password) {
-            updateData.password = await hashPassword(password);
+            updateData.passwordHash = await hashPassword(password);
         }
 
         await connectToDatabase();
@@ -79,7 +79,7 @@ export async function PUT(request: Request) {
             userId,
             { $set: updateData },
             { new: true, runValidators: true }
-        ).select("-password -__v");
+        ).select("-passwordHash -__v");
 
         return NextResponse.json({ user: updatedUser, message: "Profile updated successfully" });
     } catch (error) {

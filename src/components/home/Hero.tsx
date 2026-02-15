@@ -43,7 +43,7 @@ export default function Hero() {
                         </div>
                         <button
                             type="submit"
-                            className="bg-black text-white py-[20px] rounded-[35px] px-12 font-black uppercase tracking-[0.2em] text-xs hover:bg-zinc-900 transition-colors"
+                            className="bg-black text-white py-[20px] rounded-[15px] px-12 font-black uppercase tracking-[0.2em] text-xs hover:bg-zinc-900 transition-colors"
                         >
                             Suche
                         </button>
