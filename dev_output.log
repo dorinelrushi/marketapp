@@ -1,0 +1,55 @@
+
+> app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.13:3000
+- Environments: .env
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1761ms
+○ Compiling /property/[slug] ...
+ GET / 200 in 10.3s (compile: 3.6s, render: 6.7s)
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+User aass@gmail.com paid status: false
+ReservationForm Rendered: { hasPaidOneTimeFee: false, userEmail: 'aass@gmail.com' }
+ GET /properties 200 in 1299ms (compile: 959ms, render: 341ms)
+ GET /properties/cfdf 200 in 2.8s (compile: 2.6s, render: 264ms)
+ GET /api/profile 200 in 746ms (compile: 533ms, render: 214ms)
+ GET /api/profile 200 in 163ms (compile: 8ms, render: 155ms)
+ POST /api/reservations 201 in 2.2s (compile: 1609ms, render: 640ms)
+ GET /properties/cfdf 200 in 376ms (compile: 52ms, render: 324ms)
+ GET /dashboard/my-bookings 200 in 543ms (compile: 470ms, render: 73ms)
+ GET /api/reservations/mine 200 in 686ms (compile: 379ms, render: 307ms)
+ GET /api/reservations/mine 200 in 646ms (compile: 345ms, render: 302ms)
+ GET / 200 in 296ms (compile: 19ms, render: 278ms)
+User aass@gmail.com paid status: true
+ GET /property/cfdf 200 in 443ms (compile: 38ms, render: 405ms)
+ POST /api/reservations 201 in 299ms (compile: 7ms, render: 291ms)
+ GET /properties 200 in 243ms (compile: 18ms, render: 224ms)
+ GET /dashboard/my-bookings 200 in 54ms (compile: 9ms, render: 45ms)
+ GET /api/reservations/mine 200 in 319ms (compile: 11ms, render: 308ms)
+ GET /api/reservations/mine 200 in 305ms (compile: 9ms, render: 295ms)
+ GET /properties/cfdf 200 in 268ms (compile: 37ms, render: 232ms)
+ GET /api/profile 200 in 202ms (compile: 18ms, render: 184ms)
+ GET /api/profile 200 in 175ms (compile: 17ms, render: 159ms)
+ POST /api/reservations 201 in 299ms (compile: 9ms, render: 290ms)
+ GET /properties/cfdf 200 in 374ms (compile: 46ms, render: 328ms)
+ GET /dashboard/my-bookings 200 in 54ms (compile: 6ms, render: 48ms)
+ GET /api/reservations/mine 200 in 317ms (compile: 9ms, render: 308ms)
+ GET /api/reservations/mine 200 in 314ms (compile: 7ms, render: 306ms)
+ GET /dashboard/profile 200 in 789ms (compile: 711ms, render: 78ms)
+ GET /api/profile 200 in 240ms (compile: 50ms, render: 190ms)
+ GET /api/profile 200 in 255ms (compile: 91ms, render: 164ms)
+ PUT /api/profile 400 in 19ms (compile: 5ms, render: 15ms)
+ PUT /api/profile 200 in 188ms (compile: 5ms, render: 183ms)
+ GET / 200 in 354ms (compile: 79ms, render: 275ms)
+ GET /dashboard/profile 200 in 60ms (compile: 9ms, render: 51ms)
+ GET /api/profile 200 in 176ms (compile: 9ms, render: 167ms)
+ GET /api/profile 200 in 256ms (compile: 36ms, render: 220ms)
+ GET / 200 in 237ms (compile: 12ms, render: 225ms)
+User aass@gmail.com paid status: true
+ GET /property/aaaaqqqqqqqqqqqq 200 in 550ms (compile: 89ms, render: 461ms)
+ GET /properties 200 in 265ms (compile: 35ms, render: 230ms)
