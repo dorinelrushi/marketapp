@@ -1,7 +1,6 @@
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifyToken } from "@/lib/auth"; // We might need a non-node dependent verify if this runs on edge. 
 // Standard jsonwebtoken might have issues on edge runtime if it uses crypto. 
 // "jsonwebtoken" usually works in Node env. Next.js middleware runs on Edge runtime by default? 
 // Actually, let's just use "jose" for edge compatible jwt or rely on "jsonwebtoken" if not edge.
@@ -27,7 +26,7 @@ export function middleware(request: NextRequest) {
     // Protect Admin Routes
     if (pathname.startsWith("/admin")) {
         if (!token) {
-            return NextResponse.redirect(new URL("/login", request.url));
+            return NextResponse.redirect(new URL("/anmelden", request.url));
         }
         // Ideally we decode token to check role=admin here. 
         // But without 'jose' or edge-compatible lib, we can't easily verify signature in Edge.

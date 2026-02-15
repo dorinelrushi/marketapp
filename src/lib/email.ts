@@ -25,9 +25,8 @@ export async function sendReservationEmail(data: ReservationEmailData) {
       pass: emailPass,
     },
     // Fix for ENETUNREACH in some environments
-    // @ts-ignore
     family: 4
-  });
+  } as any);
 
   const mailOptions = {
     from: `"RentGermany Platform" <${emailUser}>`,
