@@ -22,23 +22,45 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
         notFound();
     }
 
+    // Serialize the entire property object to plain JavaScript to avoid MongoDB-specific types
+    const serializedProperty = {
+        _id: property._id.toString(),
+        title: property.title,
+        slug: property.slug,
+        pricePerNight: property.pricePerNight,
+        city: property.city,
+        address: property.address || null,
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        sizeM2: property.sizeM2,
+        description: property.description,
+        category: property.category,
+        mainImage: property.mainImage || null,
+        galleryImages: property.galleryImages || [],
+        amenities: property.amenities || [],
+        createdAt: property.createdAt ? new Date(property.createdAt).toISOString() : null,
+        updatedAt: property.updatedAt ? new Date(property.updatedAt).toISOString() : null,
+    };
+
     // Serialize owner to plain object to avoid passing MongoDB objects to Client Components
     const owner = property.createdBy ? {
-        fullName: (property.createdBy as any).fullName,
-        email: (property.createdBy as any).email,
-        phone: (property.createdBy as any).phone,
+        fullName: (property.createdBy as any).fullName || null,
+        email: (property.createdBy as any).email || null,
+        phone: (property.createdBy as any).phone || null,
     } : null;
 
-    const allImages = property.mainImage ? [property.mainImage, ...(property.galleryImages || [])] : (property.galleryImages || []);
+    const allImages = serializedProperty.mainImage
+        ? [serializedProperty.mainImage, ...serializedProperty.galleryImages]
+        : serializedProperty.galleryImages;
 
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Image Section */}
             <div className="relative h-[60vh] w-full bg-zinc-950 overflow-hidden">
-                {property.mainImage ? (
+                {serializedProperty.mainImage ? (
                     <Image
-                        src={property.mainImage}
-                        alt={property.title}
+                        src={serializedProperty.mainImage}
+                        alt={serializedProperty.title}
                         fill
                         className="object-cover opacity-80"
                         priority
@@ -63,10 +85,10 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 text-white container mx-auto z-10">
                     <div className="max-w-4xl">
                         <span className="inline-block px-3 py-1 mb-6 text-[9px] font-black uppercase tracking-[0.2em] bg-white text-black rounded-full shadow-2xl">
-                            {property.category}
+                            {serializedProperty.category}
                         </span>
                         <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black mb-4 tracking-tighter leading-[1.1] uppercase">
-                            {property.title}
+                            {serializedProperty.title}
                         </h1>
                         <div className="text-base md:text-lg text-zinc-300 flex items-center gap-3 font-bold">
                             <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
@@ -75,7 +97,7 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                             </div>
-                            {property.city} {property.address && <span className="opacity-40">• {property.address}</span>}
+                            {serializedProperty.city} {serializedProperty.address && <span className="opacity-40">• {serializedProperty.address}</span>}
                         </div>
                     </div>
                 </div>
@@ -116,16 +138,16 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                         <div>
                             <h2 className="text-xl md:text-2xl font-black mb-6 text-black uppercase tracking-tight">Objektbeschreibung</h2>
                             <div className="text-zinc-500 leading-relaxed text-base md:text-lg font-medium whitespace-pre-line">
-                                {property.description}
+                                {serializedProperty.description}
                             </div>
                         </div>
 
                         {/* Amenities */}
-                        {property.amenities && property.amenities.length > 0 && (
+                        {serializedProperty.amenities && serializedProperty.amenities.length > 0 && (
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black mb-8 text-black uppercase tracking-tight">Ausstattung</h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {property.amenities.map((amenity, idx) => (
+                                    {serializedProperty.amenities.map((amenity, idx) => (
                                         <div key={idx} className="flex items-center gap-4 p-5 rounded-2xl border border-zinc-50 bg-zinc-50/20 group hover:bg-zinc-50 transition-all">
                                             <div className="w-2 h-2 rounded-full bg-zinc-200 group-hover:bg-black transition-colors" />
                                             <span className="text-zinc-600 group-hover:text-black font-black uppercase text-[10px] tracking-widest">{amenity}</span>
@@ -141,9 +163,9 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                         <div className="sticky top-28 p-6 md:p-8 lg:p-10 rounded-[40px] border border-zinc-50 bg-white shadow-2xl shadow-black/5">
                             <OwnerInfoSection
                                 owner={owner}
-                                propertyId={property._id.toString()}
-                                pricePerNight={property.pricePerNight}
-                                propertyTitle={property.title}
+                                propertyId={serializedProperty._id}
+                                pricePerNight={serializedProperty.pricePerNight}
+                                propertyTitle={serializedProperty.title}
                             />
                         </div>
                     </div>
