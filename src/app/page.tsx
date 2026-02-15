@@ -1,5 +1,5 @@
 
-import PropertyCard from "@/components/PropertyCard";
+import PropertyCard from "@/components/properties/PropertyCard";
 import { connectToDatabase } from "@/lib/db";
 import { Property } from "@/models/Property";
 import { Suspense } from "react";
@@ -9,14 +9,34 @@ import Link from "next/link";
 
 async function FeaturedProperties() {
   await connectToDatabase();
-  const properties = await Property.find().limit(6).sort({ createdAt: -1 });
+  const properties = await Property.find().limit(6).sort({ createdAt: -1 }).lean();
+
+  // Serialize MongoDB documents to plain JavaScript objects
+  const serializedProperties = properties.map((property: any) => ({
+    _id: property._id.toString(),
+    title: property.title,
+    slug: property.slug,
+    pricePerNight: property.pricePerNight,
+    city: property.city,
+    address: property.address || null,
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    sizeM2: property.sizeM2,
+    description: property.description,
+    category: property.category,
+    mainImage: property.mainImage || null,
+    galleryImages: property.galleryImages || [],
+    amenities: property.amenities || [],
+    createdAt: property.createdAt ? new Date(property.createdAt).toISOString() : null,
+    updatedAt: property.updatedAt ? new Date(property.updatedAt).toISOString() : null,
+  }));
 
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {properties.map((property) => (
-        <PropertyCard key={property._id.toString()} property={property} />
+      {serializedProperties.map((property) => (
+        <PropertyCard key={property._id} property={property} />
       ))}
-      {properties.length === 0 && (
+      {serializedProperties.length === 0 && (
         <p className="text-zinc-700 col-span-full text-center py-12">Momentan wurden keine Immobilien gefunden.</p>
       )}
     </div>

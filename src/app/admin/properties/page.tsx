@@ -5,7 +5,17 @@ import DeletePropertyButton from "./DeletePropertyButton";
 
 export default async function AdminPropertiesPage() {
     await connectToDatabase();
-    const properties = await Property.find().sort({ createdAt: -1 });
+    const properties = await Property.find().sort({ createdAt: -1 }).lean();
+
+    // Serialize MongoDB documents to plain JavaScript objects
+    const serializedProperties = properties.map((property: any) => ({
+        _id: property._id.toString(),
+        title: property.title,
+        pricePerNight: property.pricePerNight,
+        city: property.city,
+        category: property.category,
+        mainImage: property.mainImage || null,
+    }));
 
     return (
         <div className="space-y-8">
@@ -32,8 +42,8 @@ export default async function AdminPropertiesPage() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/10">
-                        {properties.map((property) => (
-                            <tr key={property._id.toString()} className="hover:bg-white/5">
+                        {serializedProperties.map((property) => (
+                            <tr key={property._id} className="hover:bg-white/5">
                                 <td className="px-6 py-4">
                                     <div className="h-12 w-20 overflow-hidden rounded-md bg-zinc-800">
                                         {property.mainImage ? (
@@ -58,11 +68,11 @@ export default async function AdminPropertiesPage() {
                                     >
                                         Bearbeiten
                                     </Link>
-                                    <DeletePropertyButton id={property._id.toString()} />
+                                    <DeletePropertyButton id={property._id} />
                                 </td>
                             </tr>
                         ))}
-                        {properties.length === 0 && (
+                        {serializedProperties.length === 0 && (
                             <tr>
                                 <td colSpan={6} className="px-6 py-8 text-center text-zinc-500">
                                     Keine Immobilien gefunden. Erstellen Sie eine, um zu beginnen.
