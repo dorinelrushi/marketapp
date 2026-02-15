@@ -1,5 +1,6 @@
 import { connectToDatabase } from "@/lib/db";
 import { Property } from "@/models/Property";
+import { User } from "@/models/User"; // Import User model to register schema before populate
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
