@@ -18,7 +18,7 @@ export default function Footer() {
                                 1minutewohnung
                             </span>
                         </Link>
-                        <p className="text-zinc-400 text-[13px] max-w-xs leading-relaxed font-medium">
+                        <p className="text-zinc-600 text-[13px] max-w-xs leading-relaxed font-medium">
                             Die führende Plattform für die Vermittlung von Häusern und Wohnungen in Deutschland. Finden Sie Ihr Traumzuhause in wenigen Minuten.
                         </p>
                     </div>
@@ -26,10 +26,10 @@ export default function Footer() {
                     <div>
                         <h3 className="text-[10px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Kontakt</h3>
                         <ul className="space-y-4">
-                            <li className="text-[13px] text-zinc-500 font-medium">
+                            <li className="text-[13px] text-zinc-700 font-medium">
                                 <strong className="text-black font-black uppercase text-[10px] tracking-widest block mb-1">Email:</strong> info@1minutewohnung.de
                             </li>
-                            <li className="text-[13px] text-zinc-500 font-medium">
+                            <li className="text-[13px] text-zinc-700 font-medium">
                                 <strong className="text-black font-black uppercase text-[10px] tracking-widest block mb-1">Tel:</strong> +49 123 456 789
                             </li>
                         </ul>
@@ -39,7 +39,7 @@ export default function Footer() {
                         <h3 className="text-[10px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Entdecken</h3>
                         <ul className="space-y-4">
                             <li>
-                                <Link href="/" className="text-[13px] text-zinc-500 hover:text-black transition-colors font-medium">Startseite</Link>
+                                <Link href="/" className="text-[13px] text-zinc-700 hover:text-black transition-colors font-medium">Startseite</Link>
                             </li>
                             <li>
                                 <Link href="/immobilien" className="text-[13px] text-zinc-500 hover:text-black transition-colors font-medium">Verfügbare Immobilien</Link>
@@ -61,7 +61,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-zinc-50 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <p className="text-[10px] text-zinc-300 font-black uppercase tracking-widest">
+                    <p className="text-[10px] text-zinc-700 font-black uppercase tracking-widest">
                         © {new Date().getFullYear()} 1minutewohnung. Alle Rechte vorbehalten.
                     </p>
                 </div>

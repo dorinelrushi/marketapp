@@ -36,15 +36,15 @@ export default function PropertyCard({ property }: { property: any }) {
                             {property.title}
                         </h3>
                     </Link>
-                    <div className="flex items-center gap-2 text-zinc-400">
-                        <svg className="w-3.5 h-3.5 text-zinc-300" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-2 text-zinc-600">
+                        <svg className="w-3.5 h-3.5 text-zinc-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                         </svg>
-                        <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">{property.city}</span>
+                        <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">{property.city}</span>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-6 text-zinc-300 border-b border-zinc-50 pb-6 uppercase">
+                <div className="flex items-center gap-6 text-zinc-700 border-b border-zinc-50 pb-6 uppercase">
                     <div className="flex items-center gap-2">
                         <span className="text-sm font-black text-black">{property.bedrooms}</span>
                         <span className="text-[9px] font-black tracking-widest">Zimmer</span>
@@ -62,7 +62,7 @@ export default function PropertyCard({ property }: { property: any }) {
                 <div className="flex items-center justify-between pt-2">
                     <div className="flex flex-col">
                         <span className="text-2xl font-black text-black tracking-tighter">€{property.pricePerNight}</span>
-                        <span className="text-[9px] font-black text-zinc-300 uppercase tracking-[0.2em] mt-0.5">/ Nacht</span>
+                        <span className="text-[9px] font-black text-zinc-700 uppercase tracking-[0.2em] mt-0.5">/ Nacht</span>
                     </div>
                     <Link
                         href={`/immobilien/${property.slug}`}

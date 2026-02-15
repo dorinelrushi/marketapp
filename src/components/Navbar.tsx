@@ -72,7 +72,7 @@ export default function Navbar() {
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-10">
-                    <Link href="/" className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-black transition-colors">
+                    <Link href="/" className="text-[10px] font-black uppercase tracking-widest text-zinc-600 hover:text-black transition-colors">
                         Startseite
                     </Link>
                     <Link href="/immobilien" className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-black transition-colors">
@@ -82,7 +82,7 @@ export default function Navbar() {
                     {isLoggedIn ? (
                         <div className="flex items-center gap-8">
                             <Link href="/dashboard/profile" className="text-[10px] font-black uppercase tracking-widest text-black flex items-center gap-2 group">
-                                <span className="text-zinc-300">Willkommen,</span>
+                                <span className="text-zinc-700">Willkommen,</span>
                                 <span className="group-hover:translate-x-1 transition-transform">{user?.fullName?.split(' ')[0] || 'Benutzer'}</span>
                             </Link>
                             {isAdmin && (
@@ -90,7 +90,7 @@ export default function Navbar() {
                                     Admin
                                 </Link>
                             )}
-                            <button onClick={handleLogout} className="text-[10px] font-black uppercase tracking-widest text-zinc-300 hover:text-black transition-colors">
+                            <button onClick={handleLogout} className="text-[10px] font-black uppercase tracking-widest text-zinc-700 hover:text-black transition-colors">
                                 Abmelden
                             </button>
                         </div>
@@ -133,14 +133,14 @@ export default function Navbar() {
                         <Link
                             href="/"
                             onClick={() => setIsMenuOpen(false)}
-                            className="text-sm font-black uppercase tracking-widest text-zinc-400"
+                            className="text-sm font-black uppercase tracking-widest text-zinc-600"
                         >
                             Startseite
                         </Link>
                         <Link
                             href="/immobilien"
                             onClick={() => setIsMenuOpen(false)}
-                            className="text-sm font-black uppercase tracking-widest text-zinc-400"
+                            className="text-sm font-black uppercase tracking-widest text-zinc-600"
                         >
                             Immobilien
                         </Link>
@@ -170,7 +170,7 @@ export default function Navbar() {
                                         handleLogout();
                                         setIsMenuOpen(false);
                                     }}
-                                    className="text-sm font-black uppercase tracking-widest text-zinc-300 text-left"
+                                    className="text-sm font-black uppercase tracking-widest text-zinc-700 text-left"
                                 >
                                     Abmelden
                                 </button>

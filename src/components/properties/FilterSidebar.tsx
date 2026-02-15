@@ -57,7 +57,7 @@ export default function FilterSidebar() {
                                 onChange={(e) => setCategory(e.target.value)}
                                 className="text-black focus:ring-black"
                             />
-                            <span className="text-sm text-gray-600">{cat}</span>
+                            <span className="text-sm text-gray-800">{cat}</span>
                         </label>
                     ))}
                 </div>
@@ -107,7 +107,7 @@ export default function FilterSidebar() {
                 </button>
                 <button
                     onClick={clearFilters}
-                    className="w-full bg-gray-100 text-gray-600 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                    className="w-full bg-gray-100 text-gray-800 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
                 >
                     Reset Check
                 </button>

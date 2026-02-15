@@ -3,8 +3,8 @@ import { Property } from "@/models/Property";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import BookingForm from "@/components/properties/BookingForm";
 import PropertyGallery from "@/components/properties/PropertyGallery";
+import OwnerInfoSection from "@/components/properties/OwnerInfoSection";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -14,11 +14,20 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
     const { slug } = await params;
     await connectToDatabase();
 
-    const property = await Property.findOne({ slug }).lean();
+    const property = await Property.findOne({ slug })
+        .populate("createdBy", "fullName email phone")
+        .lean();
 
     if (!property) {
         notFound();
     }
+
+    // Serialize owner to plain object to avoid passing MongoDB objects to Client Components
+    const owner = property.createdBy ? {
+        fullName: (property.createdBy as any).fullName,
+        email: (property.createdBy as any).email,
+        phone: (property.createdBy as any).phone,
+    } : null;
 
     const allImages = property.mainImage ? [property.mainImage, ...(property.galleryImages || [])] : (property.galleryImages || []);
 
@@ -130,17 +139,8 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                     {/* Right Column: Booking Card */}
                     <div className="lg:col-span-1">
                         <div className="sticky top-28 p-6 md:p-8 lg:p-10 rounded-[40px] border border-zinc-50 bg-white shadow-2xl shadow-black/5">
-                            <div className="flex items-start justify-between mb-8 pb-8 border-b border-zinc-50">
-                                <div>
-                                    <span className="text-3xl md:text-4xl font-black text-black tracking-tighter">€{property.pricePerNight}</span>
-                                    <span className="text-zinc-400 font-black text-[9px] uppercase tracking-[0.2em] block mt-1">/ Pro Nacht</span>
-                                </div>
-                                <div className="flex items-center text-[9px] font-black text-black bg-black/5 px-4 py-2 rounded-full border border-black/10 uppercase tracking-[0.1em] shrink-0">
-                                    Verifiziert
-                                </div>
-                            </div>
-
-                            <BookingForm
+                            <OwnerInfoSection
+                                owner={owner}
                                 propertyId={property._id.toString()}
                                 pricePerNight={property.pricePerNight}
                                 propertyTitle={property.title}

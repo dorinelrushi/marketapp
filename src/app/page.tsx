@@ -17,7 +17,7 @@ async function FeaturedProperties() {
         <PropertyCard key={property._id.toString()} property={property} />
       ))}
       {properties.length === 0 && (
-        <p className="text-zinc-500 col-span-full text-center py-12">Momentan wurden keine Immobilien gefunden.</p>
+        <p className="text-zinc-700 col-span-full text-center py-12">Momentan wurden keine Immobilien gefunden.</p>
       )}
     </div>
   );
@@ -33,7 +33,7 @@ export default function Home() {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">So funktioniert es</h2>
-            <p className="text-zinc-500 font-medium">In nur drei einfachen Schritten zu Ihrer Traumwohnung</p>
+            <p className="text-zinc-700 font-medium">In nur drei einfachen Schritten zu Ihrer Traumwohnung</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
@@ -60,7 +60,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-4">
                   <h3 className="text-2xl font-black text-black font-display tracking-tight uppercase">{step.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed font-medium">{step.desc}</p>
+                  <p className="text-zinc-600 text-sm leading-relaxed font-medium">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -74,7 +74,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-20 gap-8">
             <div className="max-w-xl">
               <h2 className="text-4xl lg:text-6xl font-black text-black mb-6 tracking-tighter font-display leading-[1.1] uppercase">Verfügbare Immobilien</h2>
-              <p className="text-zinc-500 text-lg font-medium leading-relaxed">Wählen Sie aus den besten verifizierten Wohnungen und Häusern in Deutschland.</p>
+              <p className="text-zinc-700 text-lg font-medium leading-relaxed">Wählen Sie aus den besten verifizierten Wohnungen und Häusern in Deutschland.</p>
             </div>
             <Link href="/immobilien" className="button-primary px-8 py-4 text-xs tracking-widest uppercase border-none">
               Alle Immobilien ansehen
@@ -92,7 +92,7 @@ export default function Home() {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">Warum unsere Plattform?</h2>
-            <p className="text-zinc-400 font-medium">Der zuverlässigste Mietservice in Deutschland</p>
+            <p className="text-zinc-600 font-medium">Der zuverlässigste Mietservice in Deutschland</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -121,7 +121,7 @@ export default function Home() {
               <div key={feature.title} className="bg-zinc-50/50 p-10 rounded-[40px] space-y-6 border border-zinc-100/50">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">{feature.icon}</div>
                 <h3 className="text-xl font-bold text-black font-display tracking-tight uppercase">{feature.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed font-medium">{feature.desc}</p>
+                <p className="text-zinc-600 text-sm leading-relaxed font-medium">{feature.desc}</p>
               </div>
             ))}
           </div>

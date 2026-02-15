@@ -62,12 +62,12 @@ export default function LoginPage() {
       <div className="bg-white rounded-[40px] border border-zinc-100 shadow-2xl shadow-zinc-200/50 w-full max-w-[480px] p-12 lg:p-16 relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-black text-black mb-4 font-display tracking-tight uppercase">Willkommen zurück</h1>
-          <p className="text-zinc-400 text-sm font-medium">Melden Sie sich in Ihrem Konto an</p>
+          <p className="text-zinc-600 text-sm font-medium">Melden Sie sich in Ihrem Konto an</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2 group">
-            <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">E-Mail-Adresse</label>
+            <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">E-Mail-Adresse</label>
             <input
               type="email"
               required
@@ -79,7 +79,7 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-2 group">
-            <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Passwort</label>
+            <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Passwort</label>
             <input
               type="password"
               required
@@ -109,7 +109,7 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-12 text-center space-y-6">
-          <p className="text-[11px] font-black text-zinc-300 uppercase tracking-widest">
+          <p className="text-[11px] font-black text-zinc-700 uppercase tracking-widest">
             Noch kein Konto?{" "}
             <Link href="/registrieren" className="text-black hover:underline underline-offset-4 font-black">
               Hier registrieren
@@ -117,7 +117,7 @@ export default function LoginPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-black text-zinc-300 hover:text-black transition-colors"
+            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-black text-zinc-700 hover:text-black transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

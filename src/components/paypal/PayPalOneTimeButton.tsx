@@ -60,7 +60,7 @@ export default function PayPalOneTimeButton({ amount, onSuccess, onError }: Prop
     return (
         <>
             <Script
-                src={`https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`}
+                src={`https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`}
                 onLoad={() => setReady(true)}
             />
             <div ref={containerRef} className="z-0 relative" />

@@ -184,17 +184,19 @@ export default function EditPropertyForm({ property }: { property: Property }) {
 
             <div className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-black">Aktuelles Hauptbild</label>
+                    <label className="block text-sm font-medium text-black">Aktuelles Hauptbild (Primärfoto)</label>
                     <div className="mt-2 w-32 h-20 relative rounded-md overflow-hidden bg-zinc-100">
                         <img src={property.mainImage} alt="Main" className="object-cover w-full h-full" />
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-black">Hauptbild ersetzen (Optional)</label>
+                    <label className="block text-sm font-medium text-black">Hauptbild (Primärfoto) ersetzen</label>
                     <input
+                        id="mainImageInput"
                         type="file"
                         accept="image/*"
+                        multiple
                         onChange={(e) => setMainImageFile(e.target.files?.[0] || null)}
                         className="mt-1 block w-full text-sm text-zinc-500
                         file:mr-4 file:py-2 file:px-4
@@ -203,6 +205,7 @@ export default function EditPropertyForm({ property }: { property: Property }) {
                         file:bg-amber-50 file:text-amber-700
                         hover:file:bg-amber-100"
                     />
+                    <p className="mt-1 text-xs text-zinc-500">Wenn Sie mehrere wählen, wird das erste als Hauptbild verwendet.</p>
                 </div>
             </div>
 

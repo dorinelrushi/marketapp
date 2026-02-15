@@ -8,6 +8,7 @@ export type ReservationDocument = mongoose.Document & {
     email: string;
     mediationFeePaid: boolean;
     mediationPaymentId?: string;
+    message?: string;
     status: "pending" | "confirmed" | "cancelled";
     createdAt: Date;
     updatedAt: Date;
@@ -20,6 +21,7 @@ const ReservationSchema = new Schema<ReservationDocument>(
         fullName: { type: String, required: true, trim: true },
         phone: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, lowercase: true },
+        message: { type: String, trim: true },
         mediationFeePaid: { type: Boolean, default: false },
         mediationPaymentId: { type: String },
         status: {

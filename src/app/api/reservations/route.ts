@@ -14,6 +14,7 @@ const reservationSchema = z.object({
     fullName: z.string().min(2),
     email: z.string().email(),
     phone: z.string().min(5),
+    message: z.string().optional(),
     mediationFeePaid: z.boolean().optional(),
     mediationPaymentId: z.string().optional(),
     subscriptionId: z.string().optional(),
@@ -52,6 +53,7 @@ export async function POST(request: Request) {
             fullName,
             email,
             phone,
+            message,
             mediationFeePaid, // This field from the client is now largely ignored in favor of server-side check
             mediationPaymentId,
         } = result.data;
@@ -108,6 +110,7 @@ export async function POST(request: Request) {
             fullName,
             email,
             phone,
+            message,
             mediationFeePaid: true, // Always true now, as it's either paid now or was paid before
             mediationPaymentId: mediationPaymentId || "waived-one-time-fee", // Use payment ID or a placeholder
             status: "pending",
@@ -121,7 +124,8 @@ export async function POST(request: Request) {
                 clientName: fullName,
                 clientEmail: email,
                 clientPhone: phone,
-                propertyTitle: propertyTitle
+                propertyTitle: propertyTitle,
+                message: message
             });
             console.log("Email result:", emailResult);
         } catch (emailErr) {

@@ -5,10 +5,11 @@ interface ReservationEmailData {
   clientEmail: string;
   clientPhone: string;
   propertyTitle: string;
+  message?: string;
 }
 
 export async function sendReservationEmail(data: ReservationEmailData) {
-  const { clientName, clientEmail, clientPhone, propertyTitle } = data;
+  const { clientName, clientEmail, clientPhone, propertyTitle, message } = data;
 
   const emailUser = process.env.EMAIL_USER?.trim();
   const emailPass = process.env.EMAIL_PASS?.trim();
@@ -56,6 +57,12 @@ export async function sendReservationEmail(data: ReservationEmailData) {
               <td style="padding: 8px 0; font-weight: bold;">Property:</td>
               <td style="padding: 8px 0;">${propertyTitle}</td>
             </tr>
+            ${message ? `
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; vertical-align: top;">Message:</td>
+              <td style="padding: 8px 0; white-space: pre-wrap;">${message}</td>
+            </tr>
+            ` : ''}
           </table>
         </div>
         

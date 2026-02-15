@@ -86,7 +86,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                             key={idx}
                             onClick={() => setCurrentIndex(idx)}
                             className={`relative flex-shrink-0 w-24 md:w-32 aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden border-2 transition-all ${idx === currentIndex ? "border-black scale-95 shadow-lg" : "border-transparent opacity-40 hover:opacity-100"
-                                }}`}
+                                }`}
                         >
                             <Image
                                 src={img}

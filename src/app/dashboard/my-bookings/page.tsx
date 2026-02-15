@@ -96,7 +96,7 @@ export default function MyBookingsPage() {
                 {reservations.length === 0 ? (
                     <div className="bg-white rounded-xl p-12 text-center shadow-sm border border-gray-100">
                         <h3 className="text-xl font-medium text-gray-900 mb-2">Noch keine Buchungen</h3>
-                        <p className="text-gray-500 mb-6">Sie haben noch keine Reservierungen vorgenommen.</p>
+                        <p className="text-gray-700 mb-6">Sie haben noch keine Reservierungen vorgenommen.</p>
                         <Link
                             href="/immobilien"
                             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-black hover:bg-gray-800 transition-colors"
@@ -119,7 +119,7 @@ export default function MyBookingsPage() {
                                                 className="object-cover"
                                             />
                                         ) : (
-                                            <div className="flex items-center justify-center h-full text-gray-400">
+                                            <div className="flex items-center justify-center h-full text-gray-600">
                                                 Immobilie entfernt
                                             </div>
                                         )}
@@ -139,7 +139,7 @@ export default function MyBookingsPage() {
                                                             "Unbekannte Immobilie"
                                                         )}
                                                     </h3>
-                                                    <p className="text-gray-500 text-sm flex items-center mt-1">
+                                                    <p className="text-gray-700 text-sm flex items-center mt-1">
                                                         <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -155,13 +155,13 @@ export default function MyBookingsPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                            <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-800">
                                                 <div>
-                                                    <span className="block text-xs uppercase text-gray-400 font-semibold mb-1">Buchungsdatum</span>
+                                                    <span className="block text-xs uppercase text-gray-600 font-semibold mb-1">Buchungsdatum</span>
                                                     {new Date(reservation.createdAt).toLocaleDateString('de-DE')}
                                                 </div>
                                                 <div>
-                                                    <span className="block text-xs uppercase text-gray-400 font-semibold mb-1">Zahlungsstatus</span>
+                                                    <span className="block text-xs uppercase text-gray-600 font-semibold mb-1">Zahlungsstatus</span>
                                                     {reservation.mediationFeePaid ? (
                                                         <span className="text-green-600 flex items-center">
                                                             <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>

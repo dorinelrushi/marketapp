@@ -83,6 +83,9 @@ export async function POST(request: Request) {
             galleryImages,
         } = result.data;
 
+        console.log("Creating property with mainImage:", mainImage);
+        console.log("Creating property with galleryImages:", galleryImages);
+
         let slug = generateSlug(title);
 
         // Check uniqueness
@@ -104,8 +107,14 @@ export async function POST(request: Request) {
             category,
             amenities,
             mainImage,
-            galleryImages,
+            galleryImages: galleryImages || [],
             createdBy: userId,
+        });
+
+        console.log("Property created successfully:", {
+            id: newProperty._id,
+            mainImage: newProperty.mainImage,
+            galleryImages: newProperty.galleryImages
         });
 
         return NextResponse.json(

@@ -36,27 +36,57 @@ export default function NewPropertyPage() {
         }
 
         try {
-            // Upload Main Image
+            // Upload Main and Gallery Images
             let mainImageUrl = "";
+            let galleryImageUrls: string[] = [];
+
             if (mainImageFile) {
                 const uploadData = new FormData();
-                uploadData.append("file", mainImageFile);
+                // If user selected multiple in the main input, handle them
+                const mainFiles = (event.currentTarget.elements.namedItem("mainImageInput") as HTMLInputElement).files;
+                if (mainFiles && mainFiles.length > 0) {
+                    console.log(`Uploading ${mainFiles.length} primary photo(s)...`);
+                    for (let i = 0; i < mainFiles.length; i++) {
+                        uploadData.append("file", mainFiles[i]);
+                    }
+                } else {
+                    uploadData.append("file", mainImageFile);
+                }
+
                 const uploadRes = await fetch("/api/upload", {
                     method: "POST",
                     body: uploadData,
                 });
-                if (!uploadRes.ok) throw new Error("Fehler beim Hochladen des Hauptbildes");
+
+                if (!uploadRes.ok) {
+                    const errorText = await uploadRes.text();
+                    console.error("Upload error:", errorText);
+                    throw new Error("Fehler beim Hochladen der Hauptbilder");
+                }
+
                 const uploadJson = await uploadRes.json();
+                console.log("Upload response:", uploadJson);
+
+                if (!uploadJson.urls || uploadJson.urls.length === 0) {
+                    throw new Error("No URLs returned from upload");
+                }
+
                 mainImageUrl = uploadJson.urls[0];
+                console.log("Main image URL:", mainImageUrl);
+
+                // If more than one main photo, add others to gallery
+                if (uploadJson.urls.length > 1) {
+                    galleryImageUrls = [...uploadJson.urls.slice(1)];
+                    console.log(`Added ${galleryImageUrls.length} extra primary photos to gallery`);
+                }
             } else {
-                alert("Bitte wählen Sie ein Hauptbild aus.");
+                alert("Bitte wählen Sie mindestens ein Hauptbild (Primärfoto) aus.");
                 setLoading(false);
                 return;
             }
 
-            // Upload Gallery Images
-            let galleryImageUrls: string[] = [];
             if (galleryFiles && galleryFiles.length > 0) {
+                console.log(`Uploading ${galleryFiles.length} gallery image(s)...`);
                 const uploadData = new FormData();
                 for (let i = 0; i < galleryFiles.length; i++) {
                     uploadData.append("file", galleryFiles[i]);
@@ -65,10 +95,24 @@ export default function NewPropertyPage() {
                     method: "POST",
                     body: uploadData,
                 });
-                if (!uploadRes.ok) throw new Error("Fehler beim Hochladen der Galeriebilder");
+                if (!uploadRes.ok) {
+                    const errorText = await uploadRes.text();
+                    console.error("Gallery upload error:", errorText);
+                    throw new Error("Fehler beim Hochladen der Galeriebilder");
+                }
                 const uploadJson = await uploadRes.json();
-                galleryImageUrls = uploadJson.urls;
+                console.log("Gallery upload response:", uploadJson);
+                galleryImageUrls = [...galleryImageUrls, ...uploadJson.urls];
             }
+
+            // Limit to 6 gallery images as per schema/logic preference
+            if (galleryImageUrls.length > 6) {
+                console.log(`Limiting gallery from ${galleryImageUrls.length} to 6 images`);
+                galleryImageUrls = galleryImageUrls.slice(0, 6);
+            }
+
+            console.log("Final mainImage:", mainImageUrl);
+            console.log("Final galleryImages:", galleryImageUrls);
 
             const data = {
                 title: formData.get("title"),
@@ -84,6 +128,8 @@ export default function NewPropertyPage() {
                 galleryImages: galleryImageUrls,
                 amenities: amenities,
             };
+
+            console.log("Sending property data:", data);
 
             const res = await fetch("/api/properties", {
                 method: "POST",
@@ -170,10 +216,12 @@ export default function NewPropertyPage() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-black">Hauptbild (Vom PC)</label>
+                    <label className="block text-sm font-medium text-black">Hauptbilder (Primärfotos, min. 1)</label>
                     <input
+                        id="mainImageInput"
                         type="file"
                         accept="image/*"
+                        multiple
                         onChange={(e) => setMainImageFile(e.target.files?.[0] || null)}
                         required
                         className="mt-1 block w-full text-sm text-zinc-500
@@ -183,6 +231,7 @@ export default function NewPropertyPage() {
                         file:bg-amber-50 file:text-amber-700
                         hover:file:bg-amber-100"
                     />
+                    <p className="mt-1 text-xs text-zinc-500">Das erste Bild wird das Titelbild. Weitere werden der Galerie hinzugefügt.</p>
                 </div>
 
                 <div>

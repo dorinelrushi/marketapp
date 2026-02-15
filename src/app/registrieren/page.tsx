@@ -60,13 +60,13 @@ export default function RegisterPage() {
       <div className="bg-white rounded-[40px] border border-zinc-100 shadow-2xl shadow-zinc-200/50 w-full max-w-[540px] p-10 lg:p-14 relative z-10">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-black text-black mb-4 font-display tracking-tight uppercase">Konto erstellen</h1>
-          <p className="text-zinc-400 text-sm font-medium">Beginnen Sie heute mit der Verwaltung Ihrer Buchungen</p>
+          <p className="text-zinc-600 text-sm font-medium">Beginnen Sie heute mit der Verwaltung Ihrer Buchungen</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2 group">
-              <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Vollständiger Name</label>
+              <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Vollständiger Name</label>
               <input
                 type="text"
                 required
@@ -78,7 +78,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2 group">
-              <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Telefonnummer</label>
+              <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Telefonnummer</label>
               <input
                 type="tel"
                 required
@@ -91,7 +91,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2 group">
-            <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">E-Mail-Adresse</label>
+            <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">E-Mail-Adresse</label>
             <input
               type="email"
               required
@@ -103,7 +103,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2 group">
-            <label className="text-[10px] font-black text-zinc-300 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Passwort</label>
+            <label className="text-[10px] font-black text-zinc-700 uppercase tracking-widest ml-1 group-focus-within:text-black transition-colors">Passwort</label>
             <input
               type="password"
               required
@@ -133,7 +133,7 @@ export default function RegisterPage() {
         </form>
 
         <div className="mt-10 text-center">
-          <p className="text-[11px] font-black text-zinc-300 uppercase tracking-widest">
+          <p className="text-[11px] font-black text-zinc-700 uppercase tracking-widest">
             Bereits ein Konto?{" "}
             <Link href="/anmelden" className="text-black font-black hover:underline underline-offset-4">
               Hier anmelden

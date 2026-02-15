@@ -23,9 +23,9 @@ export default function Hero() {
                     </span>
                     <h1 className="text-5xl md:text-8xl font-display font-black text-black mb-8 leading-[0.9] uppercase tracking-tighter">
                         Finden Sie Ihr <br />
-                        <span className="text-zinc-300">nächstes</span> Zuhause
+                        <span className="text-zinc-700">nächstes</span> Zuhause
                     </h1>
-                    <p className="text-xl md:text-2xl text-zinc-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl md:text-2xl text-zinc-700 font-medium max-w-2xl mx-auto leading-relaxed">
                         Buchen Sie die besten Wohnungen und Häuser in Deutschland mit Leichtigkeit und Sicherheit.
                     </p>
                 </div>
@@ -36,7 +36,7 @@ export default function Hero() {
                             <input
                                 type="text"
                                 placeholder="Suche nach Stadt, Titel oder Adresse..."
-                                className="flex-1 px-6 py-6 outline-none text-black placeholder:text-zinc-300 bg-transparent font-bold text-sm"
+                                className="flex-1 px-6 py-6 outline-none text-black placeholder:text-zinc-400 bg-transparent font-bold text-sm"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
@@ -54,7 +54,7 @@ export default function Hero() {
                             <button
                                 key={city}
                                 onClick={() => setSearch(city)}
-                                className="text-[11px] font-black uppercase tracking-widest text-zinc-300 hover:text-black transition-colors"
+                                className="text-[11px] font-black uppercase tracking-widest text-zinc-700 hover:text-black transition-colors"
                             >
                                 {city}
                             </button>
