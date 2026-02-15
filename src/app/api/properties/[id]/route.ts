@@ -59,7 +59,7 @@ export async function PUT(
 
         if (!result.success) {
             return NextResponse.json(
-                { error: "Validation failed", details: result.error.errors },
+                { error: "Validation failed", details: result.error.format() },
                 { status: 400 }
             );
         }
