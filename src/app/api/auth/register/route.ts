@@ -56,6 +56,7 @@ export async function POST(request: Request) {
     const userResponse = {
       _id: newUser._id,
       fullName: newUser.fullName,
+      name: newUser.fullName,
       email: newUser.email,
       role: newUser.role,
       subscriptionStatus: newUser.subscriptionStatus,

@@ -20,16 +20,16 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        if (!user.paypalSubscriptionId) {
+        if (!user.subscriptionId) {
             return NextResponse.json({ error: "No active subscription found" }, { status: 400 });
         }
 
         // Cancel on PayPal
-        await cancelPayPalSubscription(user.paypalSubscriptionId);
+        await cancelPayPalSubscription(user.subscriptionId);
 
         // Update DB
-        user.subscriptionActive = false;
-        user.paypalSubscriptionId = undefined;
+        user.subscriptionStatus = "inactive";
+        user.subscriptionId = undefined;
         await user.save();
 
         return NextResponse.json({ success: true, user });

@@ -49,10 +49,11 @@ export async function POST(request: Request) {
     const userResponse = {
       _id: user._id,
       fullName: user.fullName,
+      name: user.fullName,
       email: user.email,
       role: user.role,
       subscriptionStatus: user.subscriptionStatus,
-      paymentSubscriptionId: user.subscriptionId,
+      subscriptionId: user.subscriptionId,
     };
 
     const response = NextResponse.json(

@@ -7,7 +7,7 @@ type User = {
     id: string;
     name?: string;
     email: string;
-    subscriptionActive: boolean;
+    subscriptionStatus: string;
 };
 
 export default function ProfilePage() {
@@ -59,7 +59,7 @@ export default function ProfilePage() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Kündigung fehlgeschlagen");
 
-            setUser((prev) => (prev ? { ...prev, subscriptionActive: false } : null));
+            setUser((prev) => (prev ? { ...prev, subscriptionStatus: "inactive" } : null));
             setMessage("Abonnement erfolgreich gekündigt.");
         } catch (error) {
             const err = error instanceof Error ? error.message : "Fehler bei der Kündigung";
@@ -108,12 +108,12 @@ export default function ProfilePage() {
                         <h2 className="text-sm font-medium text-muted uppercase tracking-wider">Abonnement</h2>
                         <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className={`h-3 w-3 rounded-full ${user.subscriptionActive ? "bg-green-500" : "bg-red-500"}`} />
+                                <div className={`h-3 w-3 rounded-full ${user.subscriptionStatus === "active" ? "bg-green-500" : "bg-red-500"}`} />
                                 <span className="text-lg">
-                                    {user.subscriptionActive ? "Aktiv" : "Inaktiv"}
+                                    {user.subscriptionStatus === "active" ? "Aktiv" : "Inaktiv"}
                                 </span>
                             </div>
-                            {user.subscriptionActive && (
+                            {user.subscriptionStatus === "active" && (
                                 <button
                                     onClick={handleCancelSubscription}
                                     disabled={cancelling}
@@ -123,7 +123,7 @@ export default function ProfilePage() {
                                 </button>
                             )}
                         </div>
-                        {user.subscriptionActive && (
+                        {user.subscriptionStatus === "active" && (
                             <p className="mt-2 text-xs text-muted">
                                 Ihr Abonnement verlängert sich automatisch über PayPal.
                             </p>

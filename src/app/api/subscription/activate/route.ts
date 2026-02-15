@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     await connectToDatabase();
     const user = await User.findByIdAndUpdate(
       payload.sub,
-      { subscriptionActive: true, paypalSubscriptionId: subscriptionId },
+      { subscriptionStatus: "active", subscriptionId },
       { new: true }
     );
 
@@ -39,9 +39,10 @@ export async function POST(request: Request) {
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
-        subscriptionActive: user.subscriptionActive,
-        paypalSubscriptionId: user.paypalSubscriptionId,
+        name: user.fullName,
+        fullName: user.fullName,
+        subscriptionStatus: user.subscriptionStatus,
+        subscriptionId: user.subscriptionId,
       },
     });
   } catch (error) {

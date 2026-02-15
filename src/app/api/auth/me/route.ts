@@ -23,9 +23,10 @@ export async function GET(request: Request) {
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
-        subscriptionActive: user.subscriptionActive,
-        paypalSubscriptionId: user.paypalSubscriptionId,
+        name: user.fullName,
+        fullName: user.fullName,
+        subscriptionStatus: user.subscriptionStatus,
+        subscriptionId: user.subscriptionId,
       },
     });
   } catch (error) {
