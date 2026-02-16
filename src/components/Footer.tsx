@@ -18,25 +18,25 @@ export default function Footer() {
                                 1minutewohnung
                             </span>
                         </Link>
-                        <p className="text-zinc-600 text-[13px] max-w-xs leading-relaxed font-medium">
+                        <p className="text-zinc-600 text-[14px] max-w-xs leading-relaxed font-medium">
                             Die führende Plattform für die Vermittlung von Häusern und Wohnungen in Deutschland. Finden Sie Ihr Traumzuhause in wenigen Minuten.
                         </p>
                     </div>
 
                     <div>
-                        <h3 className="text-[10px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Kontakt</h3>
+                        <h3 className="text-[16px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Kontakt</h3>
                         <ul className="space-y-4">
-                            <li className="text-[13px] text-zinc-700 font-medium">
+                            <li className="text-[16px] text-zinc-700 font-medium">
                                 <strong className="text-black font-black uppercase text-[10px] tracking-widest block mb-1">Email:</strong> info@1minutewohnung.de
                             </li>
-                            <li className="text-[13px] text-zinc-700 font-medium">
+                            <li className="text-[16px] text-zinc-700 font-medium">
                                 <strong className="text-black font-black uppercase text-[10px] tracking-widest block mb-1">Tel:</strong> +49 123 456 789
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 className="text-[10px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Entdecken</h3>
+                        <h3 className="text-[18px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Entdecken</h3>
                         <ul className="space-y-4">
                             <li>
                                 <Link href="/" className="text-[13px] text-zinc-700 hover:text-black transition-colors font-medium">Startseite</Link>
@@ -48,7 +48,7 @@ export default function Footer() {
                     </div>
 
                     <div>
-                        <h3 className="text-[10px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Rechtliches</h3>
+                        <h3 className="text-[16px] font-black text-black mb-8 uppercase tracking-[0.2em] font-display">Rechtliches</h3>
                         <ul className="space-y-4">
                             <li>
                                 <Link href="/nutzungsbedingungen" className="text-[13px] text-zinc-500 hover:text-black transition-colors font-medium">Nutzungsbedingungen</Link>

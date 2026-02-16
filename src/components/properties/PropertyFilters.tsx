@@ -24,6 +24,15 @@ export default function PropertyFilters({
     const [minRooms, setMinRooms] = useState(searchParams.get("bedrooms") || "");
     const [minBathrooms, setMinBathrooms] = useState(searchParams.get("bathrooms") || "");
 
+    // Debounce effect for automatic filtering
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            applyFilters();
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [search, minPrice, maxPrice, minSize, maxSize, minRooms, minBathrooms]);
+
     const applyFilters = (overrides = {}) => {
         const params = new URLSearchParams(searchParams.toString());
 
@@ -38,13 +47,26 @@ export default function PropertyFilters({
             ...overrides
         };
 
+        let hasChanges = false;
         Object.entries(data).forEach(([key, value]) => {
-            if (value && value !== "All") params.set(key, value as string);
-            else params.delete(key);
+            const currentVal = params.get(key);
+            if (value && value !== "All") {
+                if (currentVal !== value.toString()) {
+                    params.set(key, value as string);
+                    hasChanges = true;
+                }
+            } else {
+                if (params.has(key)) {
+                    params.delete(key);
+                    hasChanges = true;
+                }
+            }
         });
 
-        params.set("page", "1");
-        router.push(`/immobilien?${params.toString()}`);
+        if (hasChanges) {
+            params.set("page", "1");
+            router.replace(`/immobilien?${params.toString()}`, { scroll: false });
+        }
     };
 
     const resetFilters = () => {
@@ -60,7 +82,7 @@ export default function PropertyFilters({
 
     if (layout === "search-only") {
         return (
-            <form onSubmit={(e) => { e.preventDefault(); applyFilters(); }} className="flex bg-white rounded-3xl border border-zinc-200 focus-within:ring-8 focus-within:ring-black/5 focus-within:border-black/20 transition-all overflow-hidden shadow-sm">
+            <div className="flex bg-white rounded-3xl border border-zinc-200 focus-within:ring-8 focus-within:ring-black/5 focus-within:border-black/20 transition-all overflow-hidden shadow-sm">
                 <div className="flex items-center pl-8 text-zinc-400">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -69,17 +91,17 @@ export default function PropertyFilters({
                 <input
                     type="text"
                     placeholder="Suche nach Stadt, Titel oder Adresse..."
-                    className="flex-1 px-6 py-6 outline-none text-black placeholder:text-zinc-300 bg-transparent font-bold text-sm"
+                    className="w-[80%] px-6 py-6 outline-none text-black placeholder:text-zinc-300 bg-transparent font-bold text-sm"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
-                    type="submit"
-                    className="bg-black text-white px-12 font-black uppercase tracking-[0.2em] text-xs hover:bg-zinc-900 transition-colors"
+                    onClick={() => applyFilters()}
+                    className="bg-black m-[5px] text-white px-12 font-black uppercase tracking-[0.2em] text-xs hover:bg-zinc-900 transition-colors rounded-[15px]"
                 >
                     Suche
                 </button>
-            </form>
+            </div>
         );
     }
 
@@ -110,12 +132,6 @@ export default function PropertyFilters({
 
                 <div className="pt-6 flex flex-col gap-3">
                     <button
-                        onClick={() => { applyFilters(); }}
-                        className="button-primary w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] border-none"
-                    >
-                        Anwenden
-                    </button>
-                    <button
                         onClick={() => { resetFilters(); }}
                         className="w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-300 hover:text-black transition-colors"
                     >
@@ -132,7 +148,7 @@ export default function PropertyFilters({
             <p className="text-zinc-500 font-medium mb-12 text-center">Entdecken Sie die besten Wohnungen in Deutschland</p>
 
             <div className="w-full max-w-5xl bg-white rounded-[40px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] border border-zinc-100 p-8 md:p-12">
-                <form onSubmit={(e) => { e.preventDefault(); applyFilters(); }} className="space-y-12">
+                <div className="space-y-12">
                     {/* Top Search Bar */}
                     <div className="flex bg-white rounded-2xl border border-zinc-200 focus-within:ring-4 focus-within:ring-black/5 focus-within:border-black/20 transition-all overflow-hidden">
                         <input
@@ -143,7 +159,7 @@ export default function PropertyFilters({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                         <button
-                            type="submit"
+                            onClick={() => applyFilters()}
                             className="bg-black text-white px-10 font-black uppercase tracking-widest text-xs hover:bg-zinc-900 transition-colors"
                         >
                             Suche
@@ -179,12 +195,6 @@ export default function PropertyFilters({
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-8 pt-10 border-t border-zinc-50">
                         <div className="flex gap-4 w-full sm:w-auto">
                             <button
-                                type="submit"
-                                className="button-primary px-10 py-5 text-xs font-black uppercase tracking-widest border-none"
-                            >
-                                Filter anwenden
-                            </button>
-                            <button
                                 type="button"
                                 onClick={resetFilters}
                                 className="button-primary px-10 py-5 text-xs font-black uppercase tracking-widest border-none opacity-40 hover:opacity-100"
@@ -197,7 +207,7 @@ export default function PropertyFilters({
                             Angezeigt: <span className="text-black">{currentCount}</span> von <span className="text-black">{totalCount}</span> Immobilien
                         </p>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

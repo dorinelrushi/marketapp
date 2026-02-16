@@ -50,12 +50,7 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
             updatedAt: property.updatedAt ? new Date(property.updatedAt).toISOString() : null,
         };
 
-        // Serialize owner to plain object to avoid passing MongoDB objects to Client Components
-        const owner = property.createdBy ? {
-            fullName: (property.createdBy as any).fullName || null,
-            email: (property.createdBy as any).email || null,
-            phone: (property.createdBy as any).phone || null,
-        } : null;
+
 
         const allImages = serializedProperty.mainImage
             ? [serializedProperty.mainImage, ...serializedProperty.galleryImages]
@@ -135,7 +130,7 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                                             </svg>
                                         </div>
                                         <div className="min-w-0">
-                                            <p className="text-[9px] text-zinc-300 text-black uppercase tracking-[0.2em] mb-0.5 truncate">{feature.label}</p>
+                                            <p className="text-[9px] text-black uppercase tracking-[0.2em] mb-0.5 truncate">{feature.label}</p>
                                             <p className="text-lg font-black text-black">{feature.value}</p>
                                         </div>
                                     </div>
@@ -170,7 +165,6 @@ export default async function PropertyDetailsPage({ params }: PageProps) {
                         <div className="lg:col-span-1">
                             <div className="sticky top-28 p-6 md:p-8 lg:p-10 rounded-[40px] border border-zinc-50 bg-white shadow-2xl shadow-black/5">
                                 <OwnerInfoSection
-                                    owner={owner}
                                     propertyId={serializedProperty._id}
                                     pricePerNight={serializedProperty.pricePerNight}
                                     propertyTitle={serializedProperty.title}

@@ -7,9 +7,28 @@ import Hero from "@/components/home/Hero";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
-async function FeaturedProperties() {
+async function FeaturedProperties({ search }: { search?: string }) {
   await connectToDatabase();
-  const properties = await Property.find().limit(6).sort({ createdAt: -1 }).lean();
+
+  let query: any = {};
+  if (search) {
+    query = {
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { city: { $regex: search, $options: "i" } },
+        { address: { $regex: search, $options: "i" } }
+      ]
+    };
+  }
+
+  let propertiesQuery = Property.find(query).sort({ createdAt: -1 });
+
+  // Only limit if no search is active
+  if (!search) {
+    propertiesQuery = propertiesQuery.limit(6);
+  }
+
+  const properties = await propertiesQuery.lean();
 
   // Serialize MongoDB documents to plain JavaScript objects
   const serializedProperties = properties.map((property: any) => ({
@@ -43,20 +62,23 @@ async function FeaturedProperties() {
   );
 }
 
-export default function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
+  const params = await searchParams;
+  const search = params?.search;
+
   return (
     <div className="min-h-screen bg-white">
       <Hero />
 
       {/* So funktioniert es */}
-      <section className="py-24 bg-[#fffbfb]">
+      <section className="py-12 md:py-24 bg-[#fffbfb]">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">So funktioniert es</h2>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">So funktioniert es</h2>
             <p className="text-zinc-700 font-medium">In nur drei einfachen Schritten zu Ihrer Traumwohnung</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 max-w-6xl mx-auto">
             {[
               {
                 num: "1",
@@ -74,7 +96,7 @@ export default function Home() {
                 desc: "Bezahlen Sie die Anmeldegebühr sicher per PayPal und aktivieren Sie den vollen Zugriff."
               }
             ].map((step, i) => (
-              <div key={i} className="bg-white p-12 rounded-[40px] text-center space-y-8 border border-zinc-50 transition-all hover:shadow-2xl hover:shadow-zinc-200/50">
+              <div key={i} className="bg-white p-8 md:p-12 rounded-[32px] md:rounded-[40px] text-center space-y-6 md:space-y-8 border border-zinc-50 transition-all hover:shadow-2xl hover:shadow-zinc-200/50">
                 <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto text-2xl font-black font-display tracking-tighter">
                   {step.num}
                 </div>
@@ -89,12 +111,12 @@ export default function Home() {
       </section>
 
       {/* Featured Properties Section */}
-      <section id="available-properties" className="py-24 bg-zinc-50/30">
+      <section id="available-properties" className="py-12 md:py-24 bg-zinc-50/30">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-20 gap-8">
             <div className="max-w-xl">
-              <h2 className="text-4xl lg:text-6xl font-black text-black mb-6 tracking-tighter font-display leading-[1.1] uppercase">Verfügbare Immobilien</h2>
-              <p className="text-zinc-700 text-lg font-medium leading-relaxed">Wählen Sie aus den besten verifizierten Wohnungen und Häusern in Deutschland.</p>
+              <h2 className="text-3xl md:text-6xl font-black text-black mb-4 md:mb-6 tracking-tighter font-display leading-[1.1] uppercase">Verfügbare Immobilien</h2>
+              <p className="text-zinc-700 text-base md:text-lg font-medium leading-relaxed">Wählen Sie aus den besten verifizierten Wohnungen und Häusern in Deutschland.</p>
             </div>
             <Link href="/immobilien" className="button-primary px-8 py-4 text-xs tracking-widest uppercase border-none">
               Alle Immobilien ansehen
@@ -102,16 +124,16 @@ export default function Home() {
           </div>
 
           <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-3 gap-8">{[1, 2, 3].map(i => <div key={i} className="aspect-[1.3] bg-zinc-100 rounded-[32px] animate-pulse"></div>)}</div>}>
-            <FeaturedProperties />
+            <FeaturedProperties search={search} />
           </Suspense>
         </div>
       </section>
 
       {/* Warum unsere Plattform wählen? */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl lg:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">Warum unsere Plattform?</h2>
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-black text-black mb-4 font-display tracking-tighter uppercase">Warum unsere Plattform?</h2>
             <p className="text-zinc-600 font-medium">Der zuverlässigste Mietservice in Deutschland</p>
           </div>
 
@@ -138,7 +160,7 @@ export default function Home() {
                 desc: "Buchen Sie online ohne Wartezeit und kontaktieren Sie sofort den Vermieter für den Termin."
               }
             ].map((feature, i) => (
-              <div key={feature.title} className="bg-zinc-50/50 p-10 rounded-[40px] space-y-6 border border-zinc-100/50">
+              <div key={feature.title} className="bg-zinc-50/50 p-6 md:p-10 rounded-[32px] md:rounded-[40px] space-y-4 md:space-y-6 border border-zinc-100/50">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">{feature.icon}</div>
                 <h3 className="text-xl font-bold text-black font-display tracking-tight uppercase">{feature.title}</h3>
                 <p className="text-zinc-600 text-sm leading-relaxed font-medium">{feature.desc}</p>
@@ -150,12 +172,12 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="pb-0 ">
-        <div className="bg-[black] text-[white] py-[90px]">
+        <div className="bg-[black] text-[white] py-[60px] md:py-[90px]">
           <div className="relative z-10">
-            <h2 className="text-[20px] lg:text-[40px] max-w-[800px] font-black mb-12 text-center mx-auto leading-[1.1] font-display tracking-tighter uppercase">
+            <h2 className="text-[25px] lg:text-[40px] max-w-[320px] lg:max-w-[800px] m-[auto] font-black mb-8 md:mb-12 text-center mx-auto leading-[1.1] font-display tracking-tighter uppercase">
               Bereit, Ihre Traumwohnung zu finden?
             </h2>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div className="flex w-[80%] m-[auto] flex-col sm:flex-row items-center justify-center gap-6">
               <Link
                 href="/immobilien"
                 className="w-full text-[black!important] sm:w-auto px-12 py-5 bg-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-zinc-100 transition-all shadow-xl shadow-white/5"

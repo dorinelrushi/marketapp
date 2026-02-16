@@ -29,7 +29,7 @@ export default function PropertyCard({ property }: { property: any }) {
                 </div>
             </Link>
 
-            <div className="p-7 space-y-6">
+            <div className="p-5 md:p-7 space-y-4 md:space-y-6">
                 <div className="space-y-2">
                     <Link href={`/immobilien/${property.slug}`}>
                         <h3 className="text-xl font-black text-black leading-tight line-clamp-1 group-hover:text-zinc-600 transition-colors uppercase tracking-tight">
