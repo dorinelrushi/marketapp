@@ -1,4 +1,6 @@
 import mongoose, { Schema } from "mongoose";
+import "./User"; // Ensure User model is registered
+import "./Property"; // Ensure Property model is registered
 
 export type ReservationDocument = mongoose.Document & {
     propertyId: mongoose.Types.ObjectId;

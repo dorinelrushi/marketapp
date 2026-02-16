@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import "./User"; // Ensure User model is registered before Property model references it
 
 export type PropertyDocument = mongoose.Document & {
     slug: string;
